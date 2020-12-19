@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   StyleSheet,
-  KeyboardAvoidingView,
   ActivityIndicator,
   Text,
   View,
@@ -17,58 +16,55 @@ import takePhoto from "./takePhoto";
 const Main: React.FC = () => {
   const [image, setImage] = useState<string>("");
   const [sendImage, setSendImage] = useState<string>("");
-  // const [data, setData] = useState<string>("");
 
-  let d;
+  const [data, setData] = useState<string>("");
+
   const [loading, setLoading] = useState(false);
 
+  const onPress = () => {
+    axios.post("http://13.78.20.183:5000/test2", {
+      image: sendImage,
+    });
+  };
+
   return (
-    <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
-      <View style={styles.container}>
-        <PhotoComponent
-          takePhoto={() =>
-            takePhoto({
-              setImage,
-              setSendImage,
-            })
-          }
-          pickImage={() =>
-            pickImage({
-              setImage,
-              setSendImage,
-            })
-          }
-        />
-        <TouchableOpacity
+    <View style={styles.container}>
+      <PhotoComponent
+        takePhoto={() =>
+          takePhoto({
+            setImage,
+            setSendImage,
+          })
+        }
+        pickImage={() =>
+          pickImage({
+            setImage,
+            setSendImage,
+          })
+        }
+      />
+      <TouchableOpacity
+        style={{
+          backgroundColor: "blue",
+          width: 120,
+          alignItems: "center",
+          justifyContent: "center",
+          padding: 10,
+        }}
+        onPress={() => onPress()}
+      >
+        <Text
           style={{
-            backgroundColor: "blue",
-            width: 120,
-            alignItems: "center",
-            justifyContent: "center",
-            padding: 10,
-          }}
-          onPress={async () => {
-            const { data } = await axios.get("http://13.78.20.183:5000/test");
-            d = data;
-            console.log(11111111111111111111, d);
+            color: "#fff",
           }}
         >
-          <Text
-            style={{
-              color: "#fff",
-            }}
-          >
-            スタート
-          </Text>
-        </TouchableOpacity>
-        <ExpoImagePicker image={image} />
-        <Image
-          source={{ uri: `data:image/jpeg;base64,${d}` }}
-          style={{ width: 60, height: 60 }}
-        />
-      </View>
+          スタート
+        </Text>
+      </TouchableOpacity>
+      <ExpoImagePicker image={image} />
+      <Image source={{ uri: `${data}` }} style={{ width: 60, height: 60 }} />
       {loading && <ActivityIndicator size="large" style={styles.loading} />}
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
@@ -76,10 +72,10 @@ export default Main;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "white",
+    flex: 1,
   },
   loading: {
     position: "absolute",

@@ -34,6 +34,14 @@ const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
               </View>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={styles.openButton}
+            onPress={() => takePhoto()}
+          >
+            <View style={styles.modalBox}>
+              <Icon name="camera" size={24} />
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -44,7 +52,6 @@ export default PhotoComponent;
 
 const styles = StyleSheet.create({
   centeredView: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
