@@ -31,7 +31,7 @@ const takePhoto = async ({
   if (!result.cancelled) {
     setImage(result.uri);
     setSendImage(result.base64!);
-    navigation.navigate("SubPage", { img: result.uri });
+    navigation.navigate("SubPage", { img: result.uri, sendImg: result.base64 });
   }
   setLoading(false);
 };

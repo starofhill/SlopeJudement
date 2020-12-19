@@ -12,19 +12,19 @@ const SubPage: React.FC<{
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ navigation, route, setLoading }) => {
   const [image, setImage] = useState<string>(route.params?.img);
-  const [sendImage, setSendImage] = useState<string>("");
+  const [sendImage, setSendImage] = useState<string>(route.params?.sendImg);
 
   const [data, setData] = useState<string>("");
 
   const onPress = () => {
-    if (!image) {
-      Alert.alert("画像がありません。", "", [{ text: "OK" }]);
-      return;
-    }
-    Axios.post("http://13.78.20.183:5000/test2", {
-      img: sendImage,
-    });
-    // navigation.navigate("SubPage");
+    // if (!image) {
+    //   Alert.alert("画像がありません。", "", [{ text: "OK" }]);
+    //   return;
+    // }
+    // Axios.post("http://13.78.20.183:5000/test2", {
+    //   img: sendImage,
+    // });
+    navigation.navigate("ResultPage");
   };
 
   return (
