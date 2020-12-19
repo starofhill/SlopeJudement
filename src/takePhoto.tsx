@@ -5,7 +5,7 @@ interface takePhoto {
   setSendImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const takePhoto = async ({ setImage, setSendImage }: takePhoto) => {
+const takePhoto = async ({ setImage, setSendImage, navigation }: takePhoto) => {
   const { status } = await ImagePicker.requestCameraPermissionsAsync();
   if (status !== "granted") {
     alert("Sorry, we need camera roll permissions to make this work!");
@@ -20,6 +20,7 @@ const takePhoto = async ({ setImage, setSendImage }: takePhoto) => {
   if (!result.cancelled) {
     setImage(result.uri);
     setSendImage(result.base64!);
+    navigation.navigate("SubPage", { img: result.uri });
   }
 };
 

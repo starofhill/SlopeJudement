@@ -5,7 +5,7 @@ interface pickImage {
   setSendImage: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const pickImage = async ({ setImage, setSendImage }: pickImage) => {
+const pickImage = async ({ setImage, setSendImage, navigation }: pickImage) => {
   const result = await ImagePicker.launchImageLibraryAsync({
     allowsEditing: false,
     aspect: [16, 9],
@@ -15,6 +15,7 @@ const pickImage = async ({ setImage, setSendImage }: pickImage) => {
   if (!result.cancelled) {
     setImage(result.uri);
     setSendImage(result.base64!);
+    navigation.navigate("SubPage", { img: result.uri });
   }
 };
 

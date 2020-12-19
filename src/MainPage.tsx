@@ -22,7 +22,7 @@ const MainPage: React.FC = ({ navigation }) => {
 
   const [loading, setLoading] = useState(false);
 
-  console.log(navigation);
+  console.log(1111111111, image);
 
   const onPress = () => {
     if (!image) {
@@ -36,8 +36,8 @@ const MainPage: React.FC = ({ navigation }) => {
     //   .then((res) => {
     //     console.log(res, sendImage);
     //   });
-    // navigation.navigate("SubPage");
-    console.log(sendImage);
+    navigation.navigate("SubPage");
+    // console.log(sendImage);
   };
 
   return (
@@ -47,22 +47,27 @@ const MainPage: React.FC = ({ navigation }) => {
           takePhoto({
             setImage,
             setSendImage,
+            navigation,
           })
         }
         pickImage={() =>
           pickImage({
             setImage,
             setSendImage,
+            navigation,
           })
         }
+        navigation={navigation}
+        image={image}
       />
       <TouchableOpacity
         style={{
           backgroundColor: "blue",
-          width: 120,
+          width: "90%",
           alignItems: "center",
           justifyContent: "center",
           padding: 10,
+          borderRadius: 100,
         }}
         onPress={() => onPress()}
       >

@@ -5,9 +5,16 @@ import Icon from "react-native-vector-icons/FontAwesome";
 interface PhotoComponent {
   takePhoto: () => void;
   pickImage: () => void;
+  navigation;
+  image: string;
 }
 
-const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
+const PhotoComponent: React.FC<PhotoComponent> = ({
+  takePhoto,
+  pickImage,
+  navigation,
+  image,
+}) => {
   return (
     <View style={styles.centeredView}>
       <View style={styles.centeredView}>
@@ -17,7 +24,10 @@ const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
           <View style={styles.modalCard}>
             <TouchableOpacity
               style={styles.openButton}
-              onPress={() => takePhoto()}
+              onPress={() => {
+                takePhoto();
+                // navigation.navigate("SubPage", { img: image });
+              }}
             >
               <View style={styles.modalBox}>
                 <Icon name="camera" size={24} />
@@ -26,7 +36,10 @@ const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.openButton}
-              onPress={() => pickImage()}
+              onPress={() => {
+                pickImage();
+                // navigation.navigate("SubPage", { img: image });
+              }}
             >
               <View style={styles.modalBox}>
                 <Icon name="photo" size={24} />
@@ -34,14 +47,6 @@ const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
               </View>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.openButton}
-            onPress={() => takePhoto()}
-          >
-            <View style={styles.modalBox}>
-              <Icon name="camera" size={24} />
-            </View>
-          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   modalCard: {
-    flexDirection: "row",
+    // flexDirection: "row",
   },
   modalBox: {
     justifyContent: "center",
