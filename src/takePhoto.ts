@@ -19,6 +19,7 @@ const takePhoto = async ({
 
   if (status !== "granted") {
     alert("Sorry, we need camera roll permissions to make this work!");
+    setLoading(false);
     return;
   }
 

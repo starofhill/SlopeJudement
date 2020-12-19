@@ -31,7 +31,6 @@ const MainPage: React.FC<{
             setLoading,
           })
         }
-        setLoading={setLoading}
       />
     </View>
   );

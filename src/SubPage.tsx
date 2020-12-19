@@ -46,7 +46,6 @@ const SubPage: React.FC<{
             setLoading,
           })
         }
-        setLoading={setLoading}
       />
       {image && (
         <Image source={{ uri: image }} style={{ width: 60, height: 60 }} />
