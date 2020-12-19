@@ -1,44 +1,18 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  ActivityIndicator,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
-import axios from "axios";
-import ExpoImagePicker from "./ExpoImagePicker";
+import { StyleSheet, View, Image } from "react-native";
 import PhotoComponent from "./PhotoComponent";
 import pickImage from "./pickImage";
 import takePhoto from "./takePhoto";
 
-const MainPage: React.FC = ({ navigation }) => {
+const MainPage: React.FC<{
+  navigation: Record<string, unknown>;
+  route: Record<string, unknown>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ navigation, route, setLoading }) => {
   const [image, setImage] = useState<string>("");
   const [sendImage, setSendImage] = useState<string>("");
 
   const [data, setData] = useState<string>("");
-
-  const [loading, setLoading] = useState(false);
-
-  console.log(1111111111, image);
-
-  const onPress = () => {
-    if (!image) {
-      Alert.alert("画像がありません。", "", [{ text: "OK" }]);
-      return;
-    }
-    // axios
-    //   .post("http://13.78.20.183:5000/test2", {
-    //     img: sendImage,
-    //   })
-    //   .then((res) => {
-    //     console.log(res, sendImage);
-    //   });
-    navigation.navigate("SubPage");
-    // console.log(sendImage);
-  };
 
   return (
     <View style={styles.container}>
@@ -48,6 +22,7 @@ const MainPage: React.FC = ({ navigation }) => {
             setImage,
             setSendImage,
             navigation,
+            setLoading,
           })
         }
         pickImage={() =>
@@ -55,33 +30,12 @@ const MainPage: React.FC = ({ navigation }) => {
             setImage,
             setSendImage,
             navigation,
+            setLoading,
           })
         }
-        navigation={navigation}
-        image={image}
+        setLoading={setLoading}
       />
-      <TouchableOpacity
-        style={{
-          backgroundColor: "blue",
-          width: "90%",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 10,
-          borderRadius: 100,
-        }}
-        onPress={() => onPress()}
-      >
-        <Text
-          style={{
-            color: "#fff",
-          }}
-        >
-          スタート
-        </Text>
-      </TouchableOpacity>
-      <ExpoImagePicker image={image} />
       <Image source={{ uri: `${data}` }} style={{ width: 60, height: 60 }} />
-      {loading && <ActivityIndicator size="large" style={styles.loading} />}
     </View>
   );
 };
@@ -90,10 +44,10 @@ export default MainPage;
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    flex: 1,
   },
   loading: {
     position: "absolute",

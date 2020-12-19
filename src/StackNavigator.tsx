@@ -5,19 +5,42 @@ import SubPage from "./SubPage";
 
 const Stack = createStackNavigator();
 
-const StackNavigator = () => {
+const StackNavigator: React.FC<{
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ setLoading }) => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="MainPage"
-        component={MainPage}
-        options={{ headerShown: false }}
-      />
+        options={{
+          headerShown: false,
+          headerStyle: { elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
+        }}
+      >
+        {(props) => (
+          <MainPage
+            navigation={props.navigation}
+            route={props.route}
+            setLoading={setLoading}
+          />
+        )}
+      </Stack.Screen>
       <Stack.Screen
         name="SubPage"
-        component={SubPage}
-        options={{ headerShown: false }}
-      />
+        options={{
+          headerTitle: "",
+          headerBackTitleVisible: false,
+          headerStyle: { elevation: 0, shadowOpacity: 0, borderBottomWidth: 0 },
+        }}
+      >
+        {(props) => (
+          <SubPage
+            navigation={props.navigation}
+            route={props.route}
+            setLoading={setLoading}
+          />
+        )}
+      </Stack.Screen>
     </Stack.Navigator>
   );
 };

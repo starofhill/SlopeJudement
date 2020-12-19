@@ -3,9 +3,18 @@ import * as ImagePicker from "expo-image-picker";
 interface pickImage {
   setImage: React.Dispatch<React.SetStateAction<string>>;
   setSendImage: React.Dispatch<React.SetStateAction<string>>;
+  navigation: Record<string, unknown>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const pickImage = async ({ setImage, setSendImage, navigation }: pickImage) => {
+const pickImage = async ({
+  setImage,
+  setSendImage,
+  navigation,
+  setLoading,
+}: pickImage) => {
+  setLoading(true);
+
   const result = await ImagePicker.launchImageLibraryAsync({
     allowsEditing: false,
     aspect: [16, 9],
@@ -17,6 +26,8 @@ const pickImage = async ({ setImage, setSendImage, navigation }: pickImage) => {
     setSendImage(result.base64!);
     navigation.navigate("SubPage", { img: result.uri });
   }
+
+  setLoading(false);
 };
 
 export default pickImage;

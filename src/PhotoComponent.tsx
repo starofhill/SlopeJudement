@@ -5,15 +5,13 @@ import Icon from "react-native-vector-icons/FontAwesome";
 interface PhotoComponent {
   takePhoto: () => void;
   pickImage: () => void;
-  navigation;
-  image: string;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const PhotoComponent: React.FC<PhotoComponent> = ({
   takePhoto,
   pickImage,
-  navigation,
-  image,
+  setLoading,
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -25,8 +23,9 @@ const PhotoComponent: React.FC<PhotoComponent> = ({
             <TouchableOpacity
               style={styles.openButton}
               onPress={() => {
+                setLoading(true);
                 takePhoto();
-                // navigation.navigate("SubPage", { img: image });
+                setLoading(false);
               }}
             >
               <View style={styles.modalBox}>
@@ -37,8 +36,9 @@ const PhotoComponent: React.FC<PhotoComponent> = ({
             <TouchableOpacity
               style={styles.openButton}
               onPress={() => {
+                setLoading(true);
                 pickImage();
-                // navigation.navigate("SubPage", { img: image });
+                setLoading(false);
               }}
             >
               <View style={styles.modalBox}>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   openButton: {
-    borderRadius: 3,
+    borderRadius: 15,
     padding: 20,
     margin: 5,
     elevation: 2,

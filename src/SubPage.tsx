@@ -1,14 +1,54 @@
-import React from "react";
-import { Image, Text, View } from "react-native";
+import Axios from "axios";
+import React, { useState } from "react";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import PhotoComponent from "./PhotoComponent";
+import pickImage from "./pickImage";
+import takePhoto from "./takePhoto";
 
-const SubPage = ({ route }) => {
-  const image = route.params.img;
+const SubPage: React.FC<{
+  navigation: Record<string, unknown>;
+  route: Record<string, unknown>;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}> = ({ navigation, route, setLoading }) => {
+  const [image, setImage] = useState<string>(route.params?.img);
+  const [sendImage, setSendImage] = useState<string>("");
 
-  // console.log(route);
+  const [data, setData] = useState<string>("");
+
+  const onPress = () => {
+    if (!image) {
+      Alert.alert("画像がありません。", "", [{ text: "OK" }]);
+      return;
+    }
+    Axios.post("http://13.78.20.183:5000/test2", {
+      img: sendImage,
+    });
+    // navigation.navigate("SubPage");
+  };
 
   return (
-    <View>
+    <View style={styles.container}>
+      <PhotoComponent
+        takePhoto={() =>
+          takePhoto({
+            setImage,
+            setSendImage,
+            navigation,
+            setLoading,
+          })
+        }
+        pickImage={() =>
+          pickImage({
+            setImage,
+            setSendImage,
+            navigation,
+            setLoading,
+          })
+        }
+        setLoading={setLoading}
+      />
+      <Image source={{ uri: image || "" }} style={{ width: 60, height: 60 }} />
       <TouchableOpacity
         style={{
           backgroundColor: "blue",
@@ -28,9 +68,24 @@ const SubPage = ({ route }) => {
           スタート
         </Text>
       </TouchableOpacity>
-      <Image source={{ uri: image }} style={{ width: 60, height: 60 }} />
     </View>
   );
 };
 
 export default SubPage;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  loading: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
+});
