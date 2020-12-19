@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { View, StyleSheet, TouchableOpacity, Dimensions } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
 interface PhotoComponent {
   takePhoto: () => void;
@@ -10,35 +10,18 @@ interface PhotoComponent {
 const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
   return (
     <View style={styles.centeredView}>
-      <View style={styles.centeredView}>
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>出品方法を選択してください</Text>
-
-          <View style={styles.modalCard}>
-            <TouchableOpacity
-              style={styles.openButton}
-              onPress={() => {
-                takePhoto();
-              }}
-            >
-              <View style={styles.modalBox}>
-                <Icon name="camera" size={24} />
-                <Text style={styles.textStyle}>写真を撮る</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.openButton}
-              onPress={() => {
-                pickImage();
-              }}
-            >
-              <View style={styles.modalBox}>
-                <Icon name="photo" size={24} />
-                <Text style={styles.textStyle}>アルバムから選ぶ</Text>
-              </View>
-            </TouchableOpacity>
+      {/* <View style={styles.modalView}> */}
+      <View style={styles.modalCard}>
+        <TouchableOpacity style={styles.openButton} onPress={() => takePhoto()}>
+          <View style={styles.modalBox}>
+            <Icon name="camera" size={35} style={styles.icon} />
           </View>
-        </View>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.openButton} onPress={() => pickImage()}>
+          <View style={styles.modalBox}>
+            <Icon name="images" size={35} style={styles.icon} />
+          </View>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -70,12 +53,13 @@ const styles = StyleSheet.create({
   },
   openButton: {
     borderRadius: 15,
-    padding: 20,
+    paddingVertical: 10,
     margin: 5,
-    elevation: 2,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    width: 130,
+    // elevation: 2,
+    // borderColor: "#ccc",
+    // borderWidth: 1,
+    backgroundColor: "black",
+    width: Dimensions.get("screen").width * 0.9,
   },
   modalText: {
     marginBottom: 10,
@@ -95,5 +79,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#888",
     padding: 20,
+  },
+  icon: {
+    color: "white",
   },
 });

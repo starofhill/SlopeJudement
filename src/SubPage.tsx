@@ -1,6 +1,14 @@
 import Axios from "axios";
 import React, { useState } from "react";
-import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  SafeAreaView,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import PhotoComponent from "./PhotoComponent";
 import pickImage from "./pickImage";
@@ -28,48 +36,43 @@ const SubPage: React.FC<{
   };
 
   return (
-    <View style={styles.container}>
-      <PhotoComponent
-        takePhoto={() =>
-          takePhoto({
-            setImage,
-            setSendImage,
-            navigation,
-            setLoading,
-          })
-        }
-        pickImage={() =>
-          pickImage({
-            setImage,
-            setSendImage,
-            navigation,
-            setLoading,
-          })
-        }
-      />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 60, height: 60 }} />
+    <SafeAreaView style={styles.container}>
+      {!!image && (
+        <View style={styles.imageContainer}>
+          <Image
+            source={{ uri: image }}
+            resizeMode="cover"
+            style={styles.image}
+          />
+        </View>
       )}
-      <TouchableOpacity
-        style={{
-          backgroundColor: "blue",
-          width: "90%",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 10,
-          borderRadius: 100,
-        }}
-        onPress={() => onPress()}
-      >
-        <Text
-          style={{
-            color: "#fff",
-          }}
-        >
-          スタート
-        </Text>
-      </TouchableOpacity>
-    </View>
+
+      <View style={styles.bottoms}>
+        <Text style={styles.text}>顔写真を選択してください</Text>
+        <PhotoComponent
+          takePhoto={() =>
+            takePhoto({
+              setImage,
+              setSendImage,
+              navigation,
+              setLoading,
+            })
+          }
+          pickImage={() =>
+            pickImage({
+              setImage,
+              setSendImage,
+              navigation,
+              setLoading,
+            })
+          }
+        />
+
+        <TouchableOpacity style={styles.button} onPress={() => onPress()}>
+          <Text style={styles.whiteText}>START</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -78,8 +81,8 @@ export default SubPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    // justifyContent: "center",
+    // alignItems: "center",
     backgroundColor: "white",
   },
   loading: {
@@ -88,5 +91,40 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     left: 0,
+  },
+  imageContainer: {
+    width: "100%",
+    height: "60%",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  bottoms: {
+    width: "100%",
+    height: "40%",
+    alignItems: "center",
+    justifyContent: "flex-end",
+  },
+  image: {
+    width: Dimensions.get("screen").width * 0.9,
+    height: (Dimensions.get("screen").width * 0.9) / 1.6,
+    borderRadius: 15,
+  },
+  button: {
+    borderRadius: 15,
+    paddingVertical: 10,
+    margin: 5,
+    backgroundColor: "#EF5769",
+    width: Dimensions.get("screen").width * 0.9,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  whiteText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 20,
   },
 });
