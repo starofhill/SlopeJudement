@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   Image,
+  Alert,
 } from "react-native";
 import axios from "axios";
 import ExpoImagePicker from "./ExpoImagePicker";
@@ -13,7 +14,7 @@ import PhotoComponent from "./PhotoComponent";
 import pickImage from "./pickImage";
 import takePhoto from "./takePhoto";
 
-const Main: React.FC = () => {
+const MainPage: React.FC = ({ navigation }) => {
   const [image, setImage] = useState<string>("");
   const [sendImage, setSendImage] = useState<string>("");
 
@@ -21,10 +22,22 @@ const Main: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
+  console.log(navigation);
+
   const onPress = () => {
-    axios.post("http://13.78.20.183:5000/test2", {
-      image: sendImage,
-    });
+    if (!image) {
+      Alert.alert("画像がありません。", "", [{ text: "OK" }]);
+      return;
+    }
+    // axios
+    //   .post("http://13.78.20.183:5000/test2", {
+    //     img: sendImage,
+    //   })
+    //   .then((res) => {
+    //     console.log(res, sendImage);
+    //   });
+    // navigation.navigate("SubPage");
+    console.log(sendImage);
   };
 
   return (
@@ -68,7 +81,7 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default MainPage;
 
 const styles = StyleSheet.create({
   container: {
