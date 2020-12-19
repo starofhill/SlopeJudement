@@ -12,8 +12,6 @@ const MainPage: React.FC<{
   const [image, setImage] = useState<string>("");
   const [sendImage, setSendImage] = useState<string>("");
 
-  const [data, setData] = useState<string>("");
-
   return (
     <View style={styles.container}>
       <PhotoComponent
@@ -35,7 +33,6 @@ const MainPage: React.FC<{
         }
         setLoading={setLoading}
       />
-      <Image source={{ uri: `${data}` }} style={{ width: 60, height: 60 }} />
     </View>
   );
 };

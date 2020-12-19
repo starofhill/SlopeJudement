@@ -48,7 +48,9 @@ const SubPage: React.FC<{
         }
         setLoading={setLoading}
       />
-      <Image source={{ uri: image || "" }} style={{ width: 60, height: 60 }} />
+      {image && (
+        <Image source={{ uri: image }} style={{ width: 60, height: 60 }} />
+      )}
       <TouchableOpacity
         style={{
           backgroundColor: "blue",
