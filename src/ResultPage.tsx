@@ -50,7 +50,11 @@ const ResultPage: React.FC<{
       return;
     }
 
-    navigation.navigate("CollagePage", { img: responseData.img });
+    navigation.navigate("CollagePage", {
+      img: responseData.img,
+      songId: responseData.song,
+      teamColor: team?.color,
+    });
   };
 
   return (
