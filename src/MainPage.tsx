@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
     height: "40%",
     alignItems: "center",
     justifyContent: "flex-end",
+    paddingBottom: 30,
   },
   loading: {
     position: "absolute",

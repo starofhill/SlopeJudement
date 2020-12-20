@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import { StatusBar, ActivityIndicator, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { ActivityIndicator, StyleSheet } from "react-native";
+
 import StackNavigator from "./src/StackNavigator";
 
 const App: React.FC = () => {
@@ -8,6 +9,7 @@ const App: React.FC = () => {
 
   return (
     <NavigationContainer>
+      <StatusBar hidden={false} barStyle="dark-content" />
       <StackNavigator setLoading={setLoading} />
       {loading && <ActivityIndicator size="large" style={styles.loading} />}
     </NavigationContainer>

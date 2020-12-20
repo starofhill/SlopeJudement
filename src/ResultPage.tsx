@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   SafeAreaView,
@@ -36,14 +36,30 @@ const teams = [
   },
 ];
 
-const ResultPage: React.FC<{ navigation: Record<string, unknown> }> = ({
-  navigation,
-}) => {
-  const team = teams.find((t) => t.id === "nogi");
+const ResultPage: React.FC<{
+  navigation: Record<string, unknown>;
+  route: Record<string, unknown>;
+}> = ({ navigation, route }) => {
+  const [buttonCounter, setButtonCounter] = useState(0);
+  const responseData = route.params?.responseData;
+  const team = teams.find((t) => t.id === responseData.team_type);
+
+  const onPress = () => {
+    if (buttonCounter < 10) {
+      setButtonCounter((prev) => prev + 1);
+      return;
+    }
+
+    navigation.navigate("CollagePage", { img: responseData.img });
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity style={styles.imageContainer} activeOpacity={0.9}>
+      <TouchableOpacity
+        style={styles.imageContainer}
+        activeOpacity={0.9}
+        onPress={onPress}
+      >
         <Image source={team?.image} style={styles.image} />
       </TouchableOpacity>
 
@@ -90,6 +106,7 @@ const styles = StyleSheet.create({
     height: "25%",
     justifyContent: "flex-end",
     alignItems: "center",
+    paddingBottom: 30,
   },
   image: {
     width: Dimensions.get("screen").width * 0.9,
@@ -108,6 +125,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "white",
     fontWeight: "bold",
+    fontSize: 20,
   },
   mainText: {
     fontSize: 35,

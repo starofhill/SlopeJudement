@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  Image,
+} from "react-native";
 import { Audio } from "expo-av";
 import Icon from "react-native-vector-icons/FontAwesome";
 
@@ -10,6 +16,7 @@ const CollagePage: React.FC<{
 }> = ({ navigation, route, setLoading }) => {
   const [sound, setSound] = useState();
   const [isPlay, setIsPlay] = useState(false);
+  const image = route.params?.img;
 
   async function playSound() {
     console.log("Loading Sound");
@@ -43,6 +50,8 @@ const CollagePage: React.FC<{
 
   return (
     <View>
+      <Image source={{ uri: image }} style={styles.collage} />
+
       <TouchableOpacity style={styles.button} onPress={pauseSound}>
         {isPlay ? (
           <Icon name="pause" size={20} />
@@ -55,13 +64,15 @@ const CollagePage: React.FC<{
 };
 export default CollagePage;
 
+const cartdWidth = Dimensions.get("screen").width * 0.9;
+
 const styles = StyleSheet.create({
   button: {
     borderRadius: 15,
     paddingVertical: 10,
     margin: 5,
     backgroundColor: "#EF5769",
-    width: Dimensions.get("screen").width * 0.9,
+    width: cartdWidth,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -70,5 +81,11 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
+  },
+  collage: {
+    width: cartdWidth,
+    height: cartdWidth,
+    borderRadius: 15,
+    resizeMode: "cover",
   },
 });

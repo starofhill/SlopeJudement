@@ -1,4 +1,3 @@
-import Axios from "axios";
 import React, { useState } from "react";
 import {
   Alert,
@@ -7,9 +6,10 @@ import {
   Text,
   View,
   Dimensions,
+  TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import axios from "axios";
 import PhotoComponent from "./PhotoComponent";
 import pickImage from "./pickImage";
 import takePhoto from "./takePhoto";
@@ -24,15 +24,29 @@ const SubPage: React.FC<{
 
   const [data, setData] = useState<string>("");
 
-  const onPress = () => {
-    // if (!image) {
-    //   Alert.alert("画像がありません。", "", [{ text: "OK" }]);
-    //   return;
-    // }
-    // Axios.post("http://13.78.20.183:5000/test2", {
-    //   img: sendImage,
-    // });
-    navigation.navigate("ResultPage");
+  const onPress = async () => {
+    if (!image) {
+      Alert.alert("画像がありません。", "", [{ text: "OK" }]);
+      return;
+    }
+    setLoading(true);
+    await axios
+      .post("http://13.78.20.183:5000/collage", {
+        img: sendImage,
+      })
+      .then((res) => {
+        console.log(res);
+        navigation.navigate("ResultPage", { responseData: res.data });
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          Alert.alert("顔が認識されませんでした");
+        } else {
+          Alert.alert("もう一度試してください");
+        }
+      })
+      .finally(() => setLoading(false));
+    // navigation.navigate("ResultPage");
   };
 
   return (
@@ -103,10 +117,12 @@ const styles = StyleSheet.create({
     height: "40%",
     alignItems: "center",
     justifyContent: "flex-end",
+    paddingBottom: 30,
   },
   image: {
     width: Dimensions.get("screen").width * 0.9,
-    height: (Dimensions.get("screen").width * 0.9) / 1.6,
+    height: Dimensions.get("screen").width * 0.9,
+    backgroundColor: "gray",
     borderRadius: 15,
   },
   button: {

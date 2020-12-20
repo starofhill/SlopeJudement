@@ -14,12 +14,12 @@ const PhotoComponent: React.FC<PhotoComponent> = ({ takePhoto, pickImage }) => {
       <View style={styles.modalCard}>
         <TouchableOpacity style={styles.openButton} onPress={() => takePhoto()}>
           <View style={styles.modalBox}>
-            <Icon name="camera" size={35} style={styles.icon} />
+            <Icon name="camera" size={30} style={styles.icon} />
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.openButton} onPress={() => pickImage()}>
           <View style={styles.modalBox}>
-            <Icon name="images" size={35} style={styles.icon} />
+            <Icon name="images" size={30} style={styles.icon} />
           </View>
         </TouchableOpacity>
       </View>
