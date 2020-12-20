@@ -9,21 +9,26 @@ const CollagePage: React.FC<{
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ navigation, route, setLoading }) => {
   const [sound, setSound] = useState();
+  const [isPlay, setIsPlay] = useState(false);
 
   async function playSound() {
     console.log("Loading Sound");
     const { sound } = await Audio.Sound.createAsync(
-      require("../assets/No25-幸せの保護色.mp3")
+      require("../assets/23th-SingOut.mp3")
     );
     setSound(sound);
+    setIsPlay(true);
 
     console.log("Playing Sound");
     await sound.playAsync();
   }
 
-  useEffect(() => {
-    playSound();
+  async function pauseSound() {
+    isPlay ? await sound?.pauseAsync() : await sound?.playAsync();
+    setIsPlay(!isPlay);
+  }
 
+  useEffect(() => {
     return sound
       ? () => {
           console.log("Unloading Sound");
@@ -32,10 +37,14 @@ const CollagePage: React.FC<{
       : undefined;
   }, [sound]);
 
+  useEffect(() => {
+    playSound();
+  }, []);
+
   return (
     <View>
-      <TouchableOpacity style={styles.button} onPress={() => playSound()}>
-        {sound ? (
+      <TouchableOpacity style={styles.button} onPress={pauseSound}>
+        {isPlay ? (
           <Icon name="pause" size={20} />
         ) : (
           <Icon name="play" size={20} />
